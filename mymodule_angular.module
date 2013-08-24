@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * replace all mymodule_angular with your shit.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function mymodule_angular_menu() {
+  $items = array();
+   $items['mymodule-angular/testpage'] = array(
+    'title' => 'Angular Test Page',
+    'page callback' => 'mymodule_angular_testpage',
+    'access arguments' => array('access content'),
+    'file' => 'inc/mymodule_angular.testpage.inc',
+  );
+  $items['mymodule-angular/ajax-request'] = array(
+    'title' => 'Angular Ajax',
+    'page callback' => 'mymodule_angular_ajax',
+    'access arguments' => array('access content'),
+    'file' => 'inc/mymodule_angular.testpage.inc',
+  );
+  return $items;
+}
+
+
+/*
+*hook_theme
+*Theme Registery
+*/
+function mymodule_angular_theme($existing, $type, $theme, $path) {
+  return array(
+    'mymodule-angular' => array(
+      'variables' => array('var_name'=>NULL),
+      'template' => 'templates/mymodule-angular'
+    ),
+  );
+}

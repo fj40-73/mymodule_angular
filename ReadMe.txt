@@ -1,0 +1,1 @@
+Download angular libs (must include angular.min.js) you want to use and place in libraries/angular/angular.min.js

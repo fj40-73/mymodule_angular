@@ -1,0 +1,8 @@
+name = Mymodule Angular
+description = Replace with your shit.
+package = MyCustomShit
+core = 7.x
+; configure = 
+dependencies[] = libraries
+
+; files[] = inc/mymodule_angular.testpage.inc
