@@ -10,9 +10,27 @@
  */
 function mymodule_angular_menu() {
   $items = array();
-   $items['mymodule-angular/testpage'] = array(
-    'title' => 'Angular Test Page',
-    'page callback' => 'mymodule_angular_testpage',
+  $items['admin/mymodule-angular'] = array(
+    'title' => 'Mymodule Angular',
+    'page callback' => 'mymodule_angular_admin',
+    'access arguments' => array('access content'),
+  );
+  $items['admin/mymodule-angular/misctestpage'] = array(
+    'title' => 'Angular Individual Pieces Test Page',
+    'page callback' => 'mymodule_angular_misctestpage',
+    'access arguments' => array('access content'),
+    'file' => 'inc/mymodule_angular.testpage.inc',
+  );
+  $items['admin/mymodule-angular/apptestpage'] = array(
+    'title' => 'Angular App Test Page',
+    'page callback' => 'mymodule_angular_apptestpage',
+    'access arguments' => array('access content'),
+    'file' => 'inc/mymodule_angular.testpage.inc',
+  );
+  /*
+  $items['mymodule-angular/apptestpage/*'] = array(
+    'title' => 'Angular App Test Page, sub linked page',
+    'page callback' => 'mymodule_angular_apptestpage',
     'access arguments' => array('access content'),
     'file' => 'inc/mymodule_angular.testpage.inc',
   );
@@ -22,19 +40,28 @@ function mymodule_angular_menu() {
     'access arguments' => array('access content'),
     'file' => 'inc/mymodule_angular.testpage.inc',
   );
+  */
   return $items;
 }
-
-
 /*
 *hook_theme
 *Theme Registery
 */
 function mymodule_angular_theme($existing, $type, $theme, $path) {
   return array(
-    'mymodule-angular' => array(
+    'mymodule-angular-misc' => array(
       'variables' => array('var_name'=>NULL),
-      'template' => 'templates/mymodule-angular'
+      'template' => 'templates/mymodule-angular-misc'
+    ),
+    'mymodule-angular-app' => array(
+      'variables' => array('var_name'=>NULL),
+      'template' => 'templates/mymodule-angular-app'
     ),
   );
 }
+/*
+*/
+function mymodule_angular_admin() {
+  return l("Misc Test Page",'admin/mymodule-angular/misctestpage') .' | '. l("App Test Page",'admin/mymodule-angular/apptestpage');
+}
+

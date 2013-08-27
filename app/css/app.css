@@ -1,5 +1,7 @@
 /* app css stylesheet */
-
+.ng-scope input {
+  border: 1px solid;
+}
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;

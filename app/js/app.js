@@ -1,34 +1,38 @@
-app = angular.module('myApp', []);
+var app = angular.module('app', []);
 
-app.filter('unixtime', function() {
-  return function(timestamp) {
-    return new Date(timestamp*1000);
-  };
+app.config(function ($routeProvider) {
+  $routeProvider
+    .when('/', {
+      templateUrl: Drupal.settings.mymodule_angular.mymodule_angular_path + '/app/partials/app-home.html',
+      controller: "AppCtrl",
+    })
+    .when('/pizza', {
+      templateUrl: Drupal.settings.mymodule_angular.mymodule_angular_path + '/app/partials/app-1.html',
+      controller: "AppCtrl1",
+    })
+    .when('/params/:message', {
+      templateUrl: Drupal.settings.mymodule_angular.mymodule_angular_path + '/app/partials/app-1.html',
+      controller: "AppCtrl2",
+    }) 
+    .otherwise({
+      redirectTo: "/"
+    })
+})
+
+app.controller("AppCtrl", function ($scope) {
+  $scope.model = {
+    message: "This is my app!!!!"
+  }
 });
 
-app.factory('Drupal', [function(){
-  return Drupal.settings;
-}]);
-
-app.controller('Ctrl1', ['$scope', 'Drupal', function($scope, Drupal) {
-  $scope.data = Drupal.mymodule_angular;
-  console.log($scope.data);
-}]);
-
-
-app.directive('zippy', ['Drupal', function(Drupal) {
-  return {
-    restrict:"E",
-    transclude:true,
-    scope:{
-      title:"@"
-    },
-    templateUrl:Drupal.mymodule_angular.mymodule_angular_path + '/app/partials/zippy.html',
-    link: function (scope) {
-      scope.isContentVisible = false;
-      scope.toggleContent = function () {
-        scope.isContentVisible = !scope.isContentVisible;
-      }
-    }
+app.controller("AppCtrl1", function ($scope) {
+  $scope.model = {
+    message: "This is my pizza page!!!!"
   }
-}]);
+});
+
+app.controller("AppCtrl2", function ($scope, $routeParams) {
+  $scope.model = {
+    message: $routeParams.message
+  }
+});
