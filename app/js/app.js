@@ -1,23 +1,18 @@
 var app = angular.module('app', []);
 
-app.config(function ($routeProvider) {
+app.config(function($routeProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
   $routeProvider
-    .when('/', {
-      templateUrl: Drupal.settings.mymodule_angular.mymodule_angular_path + '/app/partials/app-home.html',
+  .when('/', {
+      template: '<a href="page1">Page 1</a>',
       controller: "AppCtrl",
     })
-    .when('/pizza', {
-      templateUrl: Drupal.settings.mymodule_angular.mymodule_angular_path + '/app/partials/app-1.html',
-      controller: "AppCtrl1",
-    })
-    .when('/params/:message', {
-      templateUrl: Drupal.settings.mymodule_angular.mymodule_angular_path + '/app/partials/app-1.html',
-      controller: "AppCtrl2",
-    }) 
+    .when('/page1', { template: 'page1.html', controller: 'AppCtrl' })
+    .when('/page2', { template: 'page2.html', controller: 'AppCtrl1' })
     .otherwise({
       redirectTo: "/"
     })
-})
+});
 
 app.controller("AppCtrl", function ($scope) {
   $scope.model = {
@@ -36,3 +31,16 @@ app.controller("AppCtrl2", function ($scope, $routeParams) {
     message: $routeParams.message
   }
 });
+/*
+app.directive('eatClick', function() {
+    return function(scope, element, attrs) {
+     console.log(element);
+        
+        element.click(function(event) {
+          
+            event.preventDefault();
+        });
+        
+    }
+})
+*/

@@ -14,18 +14,21 @@ function mymodule_angular_menu() {
     'title' => 'Mymodule Angular',
     'page callback' => 'mymodule_angular_admin',
     'access arguments' => array('access content'),
+    'theme callback' => 'mymodule_angular_theme_callback',
   );
-  $items['admin/mymodule-angular/misctestpage'] = array(
+  $items['mymodule-angular/misctestpage'] = array(
     'title' => 'Angular Individual Pieces Test Page',
     'page callback' => 'mymodule_angular_misctestpage',
     'access arguments' => array('access content'),
     'file' => 'inc/mymodule_angular.testpage.inc',
+    'theme callback' => 'mymodule_angular_theme_callback',
   );
-  $items['admin/mymodule-angular/apptestpage'] = array(
-    'title' => 'Angular App Test Page',
+  $items['mymodule-angular/apptestpage'] = array(
+    'title' => 'Angular App Router with Real URLs and Browser History',
     'page callback' => 'mymodule_angular_apptestpage',
     'access arguments' => array('access content'),
     'file' => 'inc/mymodule_angular.testpage.inc',
+    'theme callback' => 'mymodule_angular_theme_callback',
   );
   /*
   $items['mymodule-angular/apptestpage/*'] = array(
@@ -60,8 +63,31 @@ function mymodule_angular_theme($existing, $type, $theme, $path) {
   );
 }
 /*
+* basic page for links to angularjs pages
 */
 function mymodule_angular_admin() {
-  return l("Misc Test Page",'admin/mymodule-angular/misctestpage') .' | '. l("App Test Page",'admin/mymodule-angular/apptestpage');
+  return l("Misc Test Page",'mymodule-angular/misctestpage') .' | '. l("App Test Page",'mymodule-angular/apptestpage');
 }
 
+/**
+ * Dont load Jquery on Router test page.
+ * jQuery expando is overwritting Angularjs expando
+ * and renaming Dom <a tag links.... must be a better way.
+ */
+function mymodule_angular_js_alter(&$js) {
+  if (arg(1) == 'apptestpage') {
+    unset(
+          //$js['misc/drupal.js']
+          $js['misc/jquery.js'],
+          $js['misc/jquery.once.js']
+    );
+  }
+}
+/**
+ * If admin menu is enabled, dont load it and it's jquery.
+*/
+function _mymodule_angular_suppress_am() {
+  if (module_exists('admin_menu')) {
+    admin_menu_suppress(TRUE);
+  }
+}
